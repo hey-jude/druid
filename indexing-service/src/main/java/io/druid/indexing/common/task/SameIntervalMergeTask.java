@@ -109,7 +109,7 @@ public class SameIntervalMergeTask extends AbstractFixedIntervalTask
         dataSource,
         interval.getStart(),
         interval.getEnd(),
-        DateTimes.nowUtc().toString()
+        DateTimes.now().toString()
     );
   }
 

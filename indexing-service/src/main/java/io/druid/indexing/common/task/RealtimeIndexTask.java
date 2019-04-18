@@ -94,7 +94,7 @@ public class RealtimeIndexTask extends AbstractTask
     return makeTaskId(
         fireDepartment.getDataSchema().getDataSource(),
         fireDepartment.getTuningConfig().getShardSpec().getPartitionNum(),
-        DateTimes.nowUtc(),
+        DateTimes.now(),
         random.nextInt()
     );
   }

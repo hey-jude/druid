@@ -137,7 +137,7 @@ public class ConvertSegmentTask extends AbstractFixedIntervalTask
   {
     Preconditions.checkNotNull(dataSource, "dataSource");
     Preconditions.checkNotNull(interval, "interval");
-    return joinId(TYPE, dataSource, interval.getStart(), interval.getEnd(), DateTimes.nowUtc());
+    return joinId(TYPE, dataSource, interval.getStart(), interval.getEnd(), DateTimes.now());
   }
 
   @JsonCreator

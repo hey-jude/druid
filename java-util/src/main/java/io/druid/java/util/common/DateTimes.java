@@ -99,6 +99,10 @@ public final class DateTimes
   {
     return DateTime.now(ISOChronology.getInstanceUTC());
   }
+  public static DateTime now()
+  {
+    return DateTime.now(ISOChronology.getInstance());
+  }
 
   public static DateTime max(DateTime dt1, DateTime dt2)
   {

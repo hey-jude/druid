@@ -39,7 +39,7 @@ public abstract class TaskRunnerWorkItem
 
   public TaskRunnerWorkItem(String taskId, ListenableFuture<TaskStatus> result)
   {
-    this(taskId, result, DateTimes.nowUtc());
+    this(taskId, result, DateTimes.now());
   }
 
   private TaskRunnerWorkItem(String taskId, ListenableFuture<TaskStatus> result, DateTime createdTime)
