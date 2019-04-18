@@ -60,7 +60,6 @@ org.joda.time.MutableInterval#parse(java.lang.String)
 
 @defaultMessage Uses default time zone, use DateTimes.UtcFormatter to parse.
 org.joda.time.format.DateTimeFormatter#parseInto(org.joda.time.ReadWritableInstant, java.lang.String, int)
-org.joda.time.format.DateTimeFormatter#parseDateTime(java.lang.String)
 org.joda.time.format.DateTimeFormatter#parseMutableDateTime(java.lang.String)
 
 @defaultMessage Do not use Chronology instance with default time zone.
@@ -70,7 +69,6 @@ org.joda.time.chrono.EthiopicChronology#getInstance()
 org.joda.time.chrono.GJChronology#getInstance()
 org.joda.time.chrono.GregorianChronology#getInstance()
 org.joda.time.chrono.IslamicChronology#getInstance()
-org.joda.time.chrono.ISOChronology#getInstance()
 
 @defaultMessage Doesn't handle edge cases where the start of day isn't midnight.
 org.joda.time.LocalDate#toDateTimeAtMidnight()
