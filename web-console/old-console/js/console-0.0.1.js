@@ -146,7 +146,7 @@ $(document).ready(function() {
   $.get('/druid/indexer/v1/runningTasks', function(data) {
     $('.running_loading').hide();
     augment(data, true);
-    buildTable(data, $('#runningTable'));
+    buildTable(data, $('#runningTable'), ['statusCode','runnerStatusCode','duration','tlsPort','errorMsg']);
   });
 
   $.get('/druid/indexer/v1/pendingTasks', function(data) {
@@ -158,13 +158,13 @@ $(document).ready(function() {
   $.get('/druid/indexer/v1/waitingTasks', function(data) {
     $('.waiting_loading').hide();
     augment(data, true);
-    buildTable(data, $('#waitingTable'));
+    buildTable(data, $('#waitingTable'), ['queueInsertionTime','statusCode','duration','errorMsg']);
   });
 
   $.get('/druid/indexer/v1/completeTasks', function(data) {
     $('.complete_loading').hide();
     augment(data, false);
-    buildTable(data, $('#completeTable'));
+    buildTable(data, $('#completeTable'), ['queueInsertionTime','statusCode','runnerStatusCode','location']);
   });
 
   $.get('/druid/indexer/v1/workers', function(data) {
