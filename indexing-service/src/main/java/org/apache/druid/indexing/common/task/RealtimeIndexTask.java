@@ -71,8 +71,8 @@ import org.apache.druid.segment.realtime.plumber.RealtimePlumberSchool;
 import org.apache.druid.segment.realtime.plumber.VersioningPolicy;
 import org.apache.druid.server.coordination.DataSegmentAnnouncer;
 import org.apache.druid.timeline.DataSegment;
-import org.joda.time.DateTime;
 import org.joda.time.Interval;
+import org.joda.time.LocalDateTime;
 
 import java.io.File;
 import java.io.IOException;
@@ -107,12 +107,12 @@ public class RealtimeIndexTask extends AbstractTask
     return makeTaskId(
         fireDepartment.getDataSchema().getDataSource(),
         fireDepartment.getTuningConfig().getShardSpec().getPartitionNum(),
-        DateTimes.now(),
+        DateTimes.nowLocal(),
         makeRandomId()
     );
   }
 
-  static String makeTaskId(String dataSource, int partitionNumber, DateTime timestamp, String suffix)
+  static String makeTaskId(String dataSource, int partitionNumber, LocalDateTime timestamp, String suffix)
   {
     return StringUtils.format(
         "index_realtime_%s_%d_%s_%s",
