@@ -1195,7 +1195,7 @@ public class RemoteTaskRunner implements WorkerTaskRunner, TaskLogStreamer
           taskStatus.getStatusCode()
       );
       // Worker is done with this task
-      zkWorker.setLastCompletedTaskTime(DateTimes.nowUtc());
+      zkWorker.setLastCompletedTaskTime(DateTimes.now());
     } else {
       log.info("Workerless task[%s] completed with status[%s]", taskStatus.getId(), taskStatus.getStatusCode());
     }

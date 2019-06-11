@@ -51,7 +51,7 @@ public class HadoopTuningConfig implements TuningConfig
   {
     return new HadoopTuningConfig(
         null,
-        DateTimes.nowUtc().toString(),
+        DateTimes.now().toString(),
         DEFAULT_PARTITIONS_SPEC,
         DEFAULT_SHARD_SPECS,
         DEFAULT_INDEX_SPEC,
@@ -125,7 +125,7 @@ public class HadoopTuningConfig implements TuningConfig
   )
   {
     this.workingPath = workingPath;
-    this.version = version == null ? DateTimes.nowUtc().toString() : version;
+    this.version = version == null ? DateTimes.now().toString() : version;
     this.partitionsSpec = partitionsSpec == null ? DEFAULT_PARTITIONS_SPEC : partitionsSpec;
     this.shardSpecs = shardSpecs == null ? DEFAULT_SHARD_SPECS : shardSpecs;
     this.indexSpec = indexSpec == null ? DEFAULT_INDEX_SPEC : indexSpec;

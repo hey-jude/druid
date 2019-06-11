@@ -83,7 +83,7 @@ public abstract class MergeTaskBase extends AbstractFixedIntervalTask
     super(
         // _not_ the version, just something uniqueish
         id != null ? id : StringUtils.format(
-            "merge_%s_%s", computeProcessingID(dataSource, segments), DateTimes.nowUtc().toString()
+            "merge_%s_%s", computeProcessingID(dataSource, segments), DateTimes.now().toString()
         ),
         dataSource,
         computeMergedInterval(segments),

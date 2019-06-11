@@ -87,7 +87,7 @@ public class HeapMemoryTaskStorage implements TaskStorage
       }
 
       log.info("Inserting task %s with status: %s", task.getId(), status);
-      tasks.put(task.getId(), new TaskStuff(task, status, DateTimes.nowUtc(), task.getDataSource()));
+      tasks.put(task.getId(), new TaskStuff(task, status, DateTimes.now(), task.getDataSource()));
     }
     finally {
       giant.unlock();

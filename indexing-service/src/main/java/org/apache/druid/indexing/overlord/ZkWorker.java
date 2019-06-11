@@ -53,7 +53,7 @@ public class ZkWorker implements Closeable
   private final Function<ChildData, TaskAnnouncement> cacheConverter;
 
   private AtomicReference<Worker> worker;
-  private AtomicReference<DateTime> lastCompletedTaskTime = new AtomicReference<>(DateTimes.nowUtc());
+  private AtomicReference<DateTime> lastCompletedTaskTime = new AtomicReference<>(DateTimes.now());
   private AtomicReference<DateTime> blacklistedUntil = new AtomicReference<>();
   private AtomicInteger continuouslyFailedTasksCount = new AtomicInteger(0);
 
