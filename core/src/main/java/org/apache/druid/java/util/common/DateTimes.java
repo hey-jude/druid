@@ -138,6 +138,20 @@ public final class DateTimes
       }
     }
   }
+  public static DateTime ofLocal(String instant)
+  {
+    try {
+      return new DateTime(instant, ISOChronology.getInstance());
+    }
+    catch (IllegalArgumentException ex) {
+      try {
+        return new DateTime(Long.valueOf(instant), ISOChronology.getInstance());
+      }
+      catch (IllegalArgumentException ex2) {
+        throw ex;
+      }
+    }
+  }
 
   public static DateTime of(
       int year,
