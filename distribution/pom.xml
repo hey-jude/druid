@@ -240,6 +240,8 @@
                                         <argument>io.druid.extensions.contrib:druid-time-min-max</argument>
                                         <argument>-c</argument>
                                         <argument>io.druid.extensions.contrib:druid-virtual-columns</argument>
+                                        <argument>-c</argument>
+                                        <argument>io.druid.extensions.contrib:druid-influxdb-emitter</argument>
                                     </arguments>
                                 </configuration>
                             </execution>
