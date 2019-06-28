@@ -66,7 +66,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
@@ -78,7 +77,7 @@ import java.util.zip.ZipOutputStream;
 public class JobHelper
 {
   private static final Logger log = new Logger(JobHelper.class);
-  private static final int NUM_RETRIES = 8;
+  private static final int NUM_RETRIES = 1;
   private static final int SECONDS_BETWEEN_RETRIES = 2;
   private static final int DEFAULT_FS_BUFFER_SIZE = 1 << 18; // 256KB
   private static final Pattern SNAPSHOT_JAR = Pattern.compile(".*\\-SNAPSHOT(-selfcontained)?\\.jar$");
@@ -453,7 +452,7 @@ public class JobHelper
             return -1;
           }
         },
-        RetryPolicies.exponentialBackoffRetry(NUM_RETRIES, SECONDS_BETWEEN_RETRIES, TimeUnit.SECONDS)
+        RetryPolicies.TRY_ONCE_THEN_FAIL
     );
     zipPusher.push();
     log.info("Zipped %,d bytes to [%s]", size.get(), tmpPath.toUri());
@@ -519,7 +518,7 @@ public class JobHelper
             return -1;
           }
         },
-        RetryPolicies.exponentialBackoffRetry(NUM_RETRIES, SECONDS_BETWEEN_RETRIES, TimeUnit.SECONDS)
+        RetryPolicies.TRY_ONCE_THEN_FAIL
     );
     descriptorPusher.push();
   }
@@ -705,11 +704,7 @@ public class JobHelper
   {
     final RetryPolicy effectiveRetryPolicy;
     if (retryPolicy == null) {
-      effectiveRetryPolicy = RetryPolicies.exponentialBackoffRetry(
-          NUM_RETRIES,
-          SECONDS_BETWEEN_RETRIES,
-          TimeUnit.SECONDS
-      );
+      effectiveRetryPolicy = RetryPolicies.TRY_ONCE_THEN_FAIL;
     } else {
       effectiveRetryPolicy = retryPolicy;
     }
