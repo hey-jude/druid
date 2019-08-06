@@ -36,7 +36,8 @@ public class InfluxdbEmitterConfig
   private static final int DEFAULT_QUEUE_SIZE = Integer.MAX_VALUE;
   private static final int DEFAULT_FLUSH_PERIOD = 60000; // milliseconds
   private static final List<String> DEFAULT_DIMENSION_WHITELIST = Arrays.asList("dataSource", "type", "numMetrics", "numDimensions", "threshold", "dimension", "taskType", "taskStatus", "tier");
-  private static final List<String> DEFAULT_ALLOWED_METRICS = Arrays.asList("query/time", "query/bytes", "query/cpu/time");
+      // query : interval duration, sqlQuery : success, jvm/mem : memKind
+  private static final List<String> DEFAULT_ALLOWED_METRICS = Arrays.asList("query/time", "query/bytes", "query/cpu/time", "query/node/time", "query/node/time", "query/node/bytes", "query/node/ttfb", "sqlQuery/time", "sqlQuery/bytes", "jvm/mem/used");
 
   @JsonProperty
   private final String hostname;
@@ -85,6 +86,9 @@ public class InfluxdbEmitterConfig
     this.influxdbPassword = Preconditions.checkNotNull(influxdbPassword, "influxdbPassword can not be null");
     this.dimensionWhitelist = dimensionWhitelist == null ? ImmutableSet.copyOf(DEFAULT_DIMENSION_WHITELIST) : ImmutableSet.copyOf(dimensionWhitelist);
     this.allowedMetrics = allowedMetrics == null ? ImmutableSet.copyOf(DEFAULT_ALLOWED_METRICS) : ImmutableSet.copyOf(allowedMetrics);
+
+    log.info("dimensionWhitelist: %s", dimensionWhitelist);
+    log.info("allowedMetrics: %s", allowedMetrics);
   }
 
   @Override
