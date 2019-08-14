@@ -18,7 +18,7 @@
   ~ under the License.
   -->
 
-<Configuration status="WARN">
+<Configuration status="ERROR" shutdownHook="disable">
   <Appenders>
     <Console name="Console" target="SYSTEM_OUT">
       <PatternLayout pattern="%d{ISO8601} %p [%t] %c - %m%n"/>
@@ -28,5 +28,9 @@
     <Root level="info">
       <AppenderRef ref="Console"/>
     </Root>
+    <Logger name="com.sun.jersey.guice.spi.container.GuiceComponentProviderFactory" level="WARN"/>
+    <Logger name="org.apache.druid.initialization.Initialization" level="WARN"/>
+    <Logger name="org.apache.druid.indexer.HadoopDruidIndexerConfig" level="WARN"/>
+    <Logger name="org.apache.druid.indexing" level="DEBUG"/>
   </Loggers>
 </Configuration>

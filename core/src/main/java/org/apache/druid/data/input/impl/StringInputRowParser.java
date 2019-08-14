@@ -77,7 +77,15 @@ public class StringInputRowParser implements ByteBufferInputRowParser
   @Override
   public List<InputRow> parseBatch(ByteBuffer input)
   {
-    return Utils.nullableListOf(parseMap(buildStringKeyMap(input)));
+    try {
+      return Utils.nullableListOf(parseMap(buildStringKeyMap(input)));
+    }
+    catch (ParseException pe) {
+      byte[] bytes = new byte[input.limit()];
+      input.flip();
+      input.get(bytes);
+      throw new ParseException(pe, pe.getMessage() + " input: %s", new String(bytes, Charset.defaultCharset()));
+    }
   }
 
   @JsonProperty
@@ -116,7 +124,9 @@ public class StringInputRowParser implements ByteBufferInputRowParser
     if (coderResult.isUnderflow()) {
       chars.flip();
       try {
-        theMap = parseString(chars.toString());
+        // tsv row의 마지막 column만 가져다 쓴다.
+        String[] s = chars.toString().split("\t", -1);
+        theMap = parseString(s[s.length-1]);
       }
       finally {
         chars.clear();
