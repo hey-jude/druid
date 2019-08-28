@@ -32,5 +32,10 @@
     <Logger name="org.apache.druid.initialization.Initialization" level="WARN"/>
     <Logger name="org.apache.druid.indexer.HadoopDruidIndexerConfig" level="WARN"/>
     <Logger name="org.apache.druid.indexing" level="DEBUG"/>
+    <Logger name="org.apache.druid.segment.StringDimensionMergerV9" level="WARN"/>
+    <Logger name="org.apache.druid.segment.IndexMergerV9" level="WARN"/>
+    <Logger name="org.apache.druid.segment.IndexMerger" level="WARN"/>
+    <Logger name="org.apache.druid.segment.CompressedPools" level="WARN"/>
+    <Logger name="org.apache.druid.java.util.common.CompressionUtils" level="WARN"/>
   </Loggers>
 </Configuration>
