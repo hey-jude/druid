@@ -126,7 +126,7 @@ public class StringInputRowParser implements ByteBufferInputRowParser
       try {
         // tsv row의 마지막 column만 가져다 쓴다.
         String[] s = chars.toString().split("\t", -1);
-        theMap = parseString(s[s.length-1]);
+        theMap = parseString(s[s.length - 1]);
       }
       finally {
         chars.clear();
