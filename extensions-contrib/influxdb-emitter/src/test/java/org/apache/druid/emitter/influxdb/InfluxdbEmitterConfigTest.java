@@ -52,6 +52,7 @@ public class InfluxdbEmitterConfigTest
         30000,
         "adam",
         "password",
+        null,
         null
     );
   }
@@ -68,6 +69,7 @@ public class InfluxdbEmitterConfigTest
         30000,
         "adam",
         "password",
+        null,
         null
     );
     Assert.assertNotEquals(influxdbEmitterConfig, influxdbEmitterConfigComparison);
@@ -85,6 +87,7 @@ public class InfluxdbEmitterConfigTest
         30000,
         "adam",
         "password",
+        null,
         null
     );
   }
@@ -101,6 +104,7 @@ public class InfluxdbEmitterConfigTest
         30000,
         "adam",
         "password",
+        null,
         null
     );
     int expectedPort = 8086;
@@ -119,6 +123,7 @@ public class InfluxdbEmitterConfigTest
         30000,
         "adam",
         "password",
+        null,
         null
     );
     Assert.assertTrue(influxdbEmitterConfig.equals(influxdbEmitterConfigComparison));
@@ -136,6 +141,7 @@ public class InfluxdbEmitterConfigTest
         10000,
         "adam",
         "password",
+        null,
         null
     );
     Assert.assertFalse(influxdbEmitterConfig.equals(influxdbEmitterConfigComparison));
@@ -153,6 +159,7 @@ public class InfluxdbEmitterConfigTest
         30000,
         null,
         "password",
+        null,
         null
     );
   }
@@ -168,6 +175,7 @@ public class InfluxdbEmitterConfigTest
         15000,
         30000,
         "adam",
+        null,
         null,
         null
     );
@@ -185,6 +193,7 @@ public class InfluxdbEmitterConfigTest
         30000,
         "adam",
         "password",
+        null,
         null
     );
     ImmutableSet<String> expected = ImmutableSet.copyOf(Arrays.asList("dataSource", "type", "numMetrics", "numDimensions", "threshold", "dimension", "taskType", "taskStatus", "tier"));
@@ -203,7 +212,8 @@ public class InfluxdbEmitterConfigTest
         30000,
         "adam",
         "password",
-        ImmutableSet.of("dataSource", "taskType")
+        ImmutableSet.of("dataSource", "taskType"),
+        null
     );
     ImmutableSet<String> expected = ImmutableSet.copyOf(Arrays.asList("dataSource", "taskType"));
     Assert.assertEquals(expected, influxdbEmitterConfig.getDimensionWhitelist());

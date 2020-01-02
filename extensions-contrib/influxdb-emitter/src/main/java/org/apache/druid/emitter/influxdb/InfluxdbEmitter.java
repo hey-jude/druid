@@ -34,6 +34,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -149,7 +150,11 @@ public class InfluxdbEmitter implements Emitter
     ImmutableSet<String> dimNames = ImmutableSet.copyOf(event.getUserDims().keySet());
     for (String dimName : dimNames) {
       if (this.dimensionWhiteList.contains(dimName)) {
-        tag.append(StringUtils.format(",%1$s=%2$s", dimName, sanitize(String.valueOf(event.getUserDims().get(dimName)))));
+        String dimValue = String.valueOf(event.getUserDims().get(dimName));
+        dimValue = ("duration".equals(dimName))
+                ? convertDuration(dimValue)
+                : sanitize(dimValue);
+        tag.append(StringUtils.format(",%1$s=%2$s", dimName, dimValue));
       }
     }
     payload.append(tag);
@@ -161,6 +166,42 @@ public class InfluxdbEmitter implements Emitter
     payload.append(StringUtils.format(" %d\n", event.getCreatedTime().getMillis() * 1000000));
 
     return payload.toString();
+  }
+
+  private String convertDuration(String duration)
+  {
+    try {
+      // log.info("duration:" + duration);
+      if (duration == null || "".equals(duration)) {
+        return "P000D";
+      }
+      // "PT1036799.001S", "PT7200S"
+      int seconds = duration.endsWith(".001S")
+              ? Integer.parseInt(duration.substring(2, duration.length() - 5)) + 1
+              : Integer.parseInt(duration.substring(2, duration.length() - 1));
+      if (seconds < 3600 || seconds > 94608000) { // 1시간 미만이거나 3년 이상
+        duration = sanitize(duration);
+      } else if (seconds < 86400) {
+        duration = "PT" + String.format(Locale.ROOT, "%02d", seconds / 3600) + "H";
+      } else if (seconds < 604800) {
+        duration = "P" + String.format(Locale.ROOT, "%d", seconds / 86400) + "D";
+      } else if (seconds < 2592000) {
+        duration = "P" + String.format(Locale.ROOT, "%d", seconds / 604800) + "W";
+      } else if (seconds < 7776000) {
+        duration = "P" + String.format(Locale.ROOT, "%d", seconds / 2592000) + "M";
+      } else if (seconds < 31536000) {
+        duration = "P" + String.format(Locale.ROOT, "%d", seconds / 7776000) + "Q";
+      } else {  // >= 31536000
+        duration = "P" + String.format(Locale.ROOT, "%d", seconds / 31536000) + "Y";
+      }
+    }
+    catch (NumberFormatException e) {
+      //log.warn(e, "duration: %s ex: %s", duration, e.getMessage());
+      duration = sanitize(duration);
+    }
+    finally {
+      return duration;
+    }
   }
 
   private static String sanitize(String namespace)
