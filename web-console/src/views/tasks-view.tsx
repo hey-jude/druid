@@ -367,7 +367,7 @@ ORDER BY "rank" DESC, "created_time" DESC`);
             }
           }
         ]}
-        defaultPageSize={10}
+        defaultPageSize={5}
         className="-striped -highlight"
       />
       {this.renderResumeSupervisorAction()}
@@ -509,7 +509,7 @@ ORDER BY "rank" DESC, "created_time" DESC`);
             Aggregated: row => ''
           }
         ]}
-        defaultPageSize={20}
+        defaultPageSize={10}
         className="-striped -highlight"
       />
       {this.renderKillTaskAction()}

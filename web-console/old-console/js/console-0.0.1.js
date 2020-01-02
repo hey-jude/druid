@@ -158,13 +158,13 @@ $(document).ready(function() {
   $.get('/druid/indexer/v1/waitingTasks', function(data) {
     $('.waiting_loading').hide();
     augment(data, true);
-    buildTable(data, $('#waitingTable'), ['queueInsertionTime','statusCode','duration','errorMsg']);
+    buildTable(data, $('#waitingTable'), ['createdTime','queueInsertionTime','statusCode','duration','location','errorMsg']);
   });
 
   $.get('/druid/indexer/v1/completeTasks', function(data) {
     $('.complete_loading').hide();
     augment(data, false);
-    buildTable(data, $('#completeTable'), ['queueInsertionTime','statusCode','runnerStatusCode','location']);
+    buildTable(data, $('#completeTable'), ['queueInsertionTime','runnerStatusCode','location']);
   });
 
   $.get('/druid/indexer/v1/workers', function(data) {

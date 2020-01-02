@@ -308,7 +308,7 @@ WHERE "server_type" = 'historical'`);
           accessor: "blacklistedUntil"
         }
       ]}
-      defaultPageSize={10}
+      defaultPageSize={5}
       className="-striped -highlight"
       SubComponent={rowInfo => {
         const runningTasks = rowInfo.original.runningTasks;
