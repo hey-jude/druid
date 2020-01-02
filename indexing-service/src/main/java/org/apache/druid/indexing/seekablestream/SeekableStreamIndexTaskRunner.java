@@ -81,6 +81,7 @@ import org.apache.druid.server.security.AuthorizerMapper;
 import org.apache.druid.timeline.DataSegment;
 import org.apache.druid.utils.CircularBuffer;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
@@ -602,7 +603,7 @@ public abstract class SeekableStreamIndexTaskRunner<PartitionIdType, SequenceOff
                       // Failure to allocate segment puts determinism at risk, bail out to be safe.
                       // May want configurable behavior here at some point.
                       // If we allow continuing, then consider blacklisting the interval for a while to avoid constant checks.
-                      throw new ISE("Could not allocate segment for row with timestamp[%s]", row.getTimestamp());
+                      throw new ISE("Could not allocate segment for row with timestamp[%s]", row.getTimestamp().withZone(DateTimeZone.getDefault()));
                     }
 
                     if (addResult.getParseException() != null) {

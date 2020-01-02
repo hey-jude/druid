@@ -85,6 +85,7 @@ import org.apache.druid.segment.realtime.plumber.Committers;
 import org.apache.druid.server.security.Action;
 import org.apache.druid.server.security.AuthorizerMapper;
 import org.apache.druid.utils.CircularBuffer;
+import org.joda.time.DateTimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -325,7 +326,7 @@ public class AppenderatorDriverRealtimeIndexTask extends AbstractTask implements
               // Failure to allocate segment puts determinism at risk, bail out to be safe.
               // May want configurable behavior here at some point.
               // If we allow continuing, then consider blacklisting the interval for a while to avoid constant checks.
-              throw new ISE("Could not allocate segment for row with timestamp[%s]", inputRow.getTimestamp());
+              throw new ISE("Could not allocate segment for row with timestamp[%s]", inputRow.getTimestamp().withZone(DateTimeZone.getDefault()));
             }
 
             if (addResult.getParseException() != null) {

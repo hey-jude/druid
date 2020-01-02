@@ -267,8 +267,8 @@ public class RealtimeIndexTaskTest
   public void testMakeTaskId()
   {
     Assert.assertEquals(
-        "index_realtime_test_0_2015-01-02T00:00:00.000Z_abcdefgh",
-        RealtimeIndexTask.makeTaskId("test", 0, DateTimes.of("2015-01-02"), "abcdefgh")
+        "index_realtime_test_0_2015-01-02T00:00:00.000_abcdefgh",
+        RealtimeIndexTask.makeTaskId("test", 0, DateTimes.of("2015-01-02").toLocalDateTime(), "abcdefgh")
     );
   }
 

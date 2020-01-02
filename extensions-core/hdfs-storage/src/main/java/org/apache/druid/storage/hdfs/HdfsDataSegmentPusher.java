@@ -24,6 +24,9 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.hash.HashCode;
+import com.google.common.hash.HashFunction;
+import com.google.common.io.BaseEncoding;
 import com.google.common.io.ByteSink;
 import com.google.common.io.ByteSource;
 import com.google.inject.Inject;
@@ -42,8 +45,10 @@ import org.apache.hadoop.fs.HadoopFsWrapper;
 import org.apache.hadoop.fs.Path;
 import org.joda.time.format.ISODateTimeFormat;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
 import java.util.Map;
@@ -156,8 +161,7 @@ public class HdfsDataSegmentPusher implements DataSegmentPusher
       );
 
       log.info("Creating descriptor file at[%s]", tmpDescriptorFile);
-      ByteSource
-          .wrap(jsonMapper.writeValueAsBytes(dataSegment))
+      new ByteArrayByteSource(jsonMapper.writeValueAsBytes(dataSegment))
           .copyTo(new HdfsOutputStreamSupplier(fs, tmpDescriptorFile));
 
       // Create parent if it does not exist, recreation is not an error
@@ -177,6 +181,56 @@ public class HdfsDataSegmentPusher implements DataSegmentPusher
     }
 
     return dataSegment;
+  }
+
+  private static final class ByteArrayByteSource extends ByteSource
+  {
+
+    private final byte[] bytes;
+
+    private ByteArrayByteSource(byte[] bytes)
+    {
+      this.bytes = Preconditions.checkNotNull(bytes);
+    }
+
+    @Override
+    public InputStream openStream() throws IOException
+    {
+      return new ByteArrayInputStream(bytes);
+    }
+
+    @Override
+    public long size() throws IOException
+    {
+      return bytes.length;
+    }
+
+    @Override
+    public byte[] read() throws IOException
+    {
+      return bytes.clone();
+    }
+
+    @Override
+    public long copyTo(OutputStream output) throws IOException
+    {
+      output.write(bytes);
+      return bytes.length;
+    }
+
+    @Override
+    public HashCode hash(HashFunction hashFunction) throws IOException
+    {
+      return hashFunction.hashBytes(bytes);
+    }
+
+    // TODO(user): Possibly override slice()
+
+    @Override
+    public String toString()
+    {
+      return "ByteStreams.asByteSource(" + BaseEncoding.base16().encode(bytes) + ")";
+    }
   }
 
   private void copyFilesWithChecks(final FileSystem fs, final Path from, final Path to) throws IOException

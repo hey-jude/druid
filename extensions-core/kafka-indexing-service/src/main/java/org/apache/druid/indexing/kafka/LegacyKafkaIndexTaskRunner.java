@@ -118,6 +118,8 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static org.joda.time.DateTimeZone.getDefault;
+
 /**
  * Kafka index task runner which doesn't support incremental segment publishing. We keep this to support rolling update.
  * This class will be removed in a future release.
@@ -467,7 +469,7 @@ public class LegacyKafkaIndexTaskRunner extends SeekableStreamIndexTaskRunner<In
                       // Failure to allocate segment puts determinism at risk, bail out to be safe.
                       // May want configurable behavior here at some point.
                       // If we allow continuing, then consider blacklisting the interval for a while to avoid constant checks.
-                      throw new ISE("Could not allocate segment for row with timestamp[%s]", row.getTimestamp());
+                      throw new ISE("Could not allocate segment for row with timestamp[%s]", row.getTimestamp().withZone(getDefault()));
                     }
 
                     if (addResult.getParseException() != null) {
