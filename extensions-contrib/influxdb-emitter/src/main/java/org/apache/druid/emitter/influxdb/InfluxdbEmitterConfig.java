@@ -36,6 +36,7 @@ public class InfluxdbEmitterConfig
   private static final int DEFAULT_QUEUE_SIZE = Integer.MAX_VALUE;
   private static final int DEFAULT_FLUSH_PERIOD = 60000; // milliseconds
   private static final List<String> DEFAULT_DIMENSION_WHITELIST = Arrays.asList("dataSource", "type", "numMetrics", "numDimensions", "threshold", "dimension", "taskType", "taskStatus", "tier");
+  private static final List<String> DEFAULT_ALLOWED_METRICS = Arrays.asList("query/time", "query/bytes", "query/cpu/time");
 
   @JsonProperty
   private final String hostname;
@@ -55,6 +56,8 @@ public class InfluxdbEmitterConfig
   private final String influxdbPassword;
   @JsonProperty
   private final ImmutableSet<String> dimensionWhitelist;
+  @JsonProperty
+  private final ImmutableSet<String> allowedMetrics;
 
   private static Logger log = new Logger(InfluxdbEmitterConfig.class);
 
@@ -68,7 +71,8 @@ public class InfluxdbEmitterConfig
       @JsonProperty("flushDelay") Integer flushDelay,
       @JsonProperty("influxdbUserName") String influxdbUserName,
       @JsonProperty("influxdbPassword") String influxdbPassword,
-      @JsonProperty("dimensionWhitelist") Set<String> dimensionWhitelist
+      @JsonProperty("dimensionWhitelist") Set<String> dimensionWhitelist,
+      @JsonProperty("allowedMetrics") Set<String> allowedMetrics
   )
   {
     this.hostname = Preconditions.checkNotNull(hostname, "hostname can not be null");
@@ -80,6 +84,7 @@ public class InfluxdbEmitterConfig
     this.influxdbUserName = Preconditions.checkNotNull(influxdbUserName, "influxdbUserName can not be null");
     this.influxdbPassword = Preconditions.checkNotNull(influxdbPassword, "influxdbPassword can not be null");
     this.dimensionWhitelist = dimensionWhitelist == null ? ImmutableSet.copyOf(DEFAULT_DIMENSION_WHITELIST) : ImmutableSet.copyOf(dimensionWhitelist);
+    this.allowedMetrics = allowedMetrics == null ? ImmutableSet.copyOf(DEFAULT_ALLOWED_METRICS) : ImmutableSet.copyOf(allowedMetrics);
   }
 
   @Override
@@ -121,6 +126,9 @@ public class InfluxdbEmitterConfig
     if (!getDimensionWhitelist().equals(that.getDimensionWhitelist())) {
       return false;
     }
+    if (!getAllowedMetrics().equals(that.getAllowedMetrics())) {
+      return false;
+    }
     return true;
 
   }
@@ -137,6 +145,7 @@ public class InfluxdbEmitterConfig
     result = 31 * result + getInfluxdbUserName().hashCode();
     result = 31 * result + getInfluxdbPassword().hashCode();
     result = 31 * result + getDimensionWhitelist().hashCode();
+    result = 31 * result + getAllowedMetrics().hashCode();
     return result;
   }
 
@@ -192,5 +201,11 @@ public class InfluxdbEmitterConfig
   public ImmutableSet<String> getDimensionWhitelist()
   {
     return dimensionWhitelist;
+  }
+
+  @JsonProperty
+  public ImmutableSet<String> getAllowedMetrics()
+  {
+    return allowedMetrics;
   }
 }

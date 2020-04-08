@@ -50,6 +50,7 @@ public class InfluxdbEmitter implements Emitter
   private final AtomicBoolean started = new AtomicBoolean(false);
   private final ScheduledExecutorService exec = ScheduledExecutors.fixed(1, "InfluxdbEmitter-%s");
   private final ImmutableSet dimensionWhiteList;
+  private final ImmutableSet allowedMetrics;
   private final LinkedBlockingQueue<ServiceMetricEvent> eventsQueue;
   private static final Pattern DOT_OR_WHITESPACE = Pattern.compile("[\\s]+|[.]+");
 
@@ -59,6 +60,7 @@ public class InfluxdbEmitter implements Emitter
     this.influxdbClient = HttpClientBuilder.create().build();
     this.eventsQueue = new LinkedBlockingQueue<>(influxdbEmitterConfig.getMaxQueueSize());
     this.dimensionWhiteList = influxdbEmitterConfig.getDimensionWhitelist();
+    this.allowedMetrics = influxdbEmitterConfig.getAllowedMetrics();
     log.info("constructed influxdb emitter");
   }
 
@@ -84,7 +86,9 @@ public class InfluxdbEmitter implements Emitter
     if (event instanceof ServiceMetricEvent) {
       ServiceMetricEvent metricEvent = (ServiceMetricEvent) event;
       try {
-        eventsQueue.put(metricEvent);
+        if (allowedMetrics.contains(metricEvent.getMetric())) {
+          eventsQueue.put(metricEvent);
+        }
       }
       catch (InterruptedException exception) {
         log.error(exception, "Failed to add metricEvent to events queue.");
@@ -93,7 +97,7 @@ public class InfluxdbEmitter implements Emitter
     }
   }
 
-  public void postToInflux(String payload)
+  private void postToInflux(String payload)
   {
     HttpPost post = new HttpPost(
         "http://" + influxdbEmitterConfig.getHostname()
@@ -117,7 +121,7 @@ public class InfluxdbEmitter implements Emitter
     }
   }
 
-  public String transformForInfluxSystems(ServiceMetricEvent event)
+  String transformForInfluxSystems(ServiceMetricEvent event)
   {
     // split Druid metric on slashes and join middle parts (if any) with "_"
     String[] parts = getValue("metric", event).split("/");
@@ -164,7 +168,7 @@ public class InfluxdbEmitter implements Emitter
     return DOT_OR_WHITESPACE.matcher(namespace).replaceAll("_");
   }
 
-  public String getValue(String key, ServiceMetricEvent event)
+  private String getValue(String key, ServiceMetricEvent event)
   {
     switch (key) {
       case "service":
@@ -185,7 +189,7 @@ public class InfluxdbEmitter implements Emitter
   }
 
   @Override
-  public void flush() throws IOException
+  public void flush()
   {
     if (started.get()) {
       transformAndSendToInfluxdb(eventsQueue);
@@ -193,7 +197,7 @@ public class InfluxdbEmitter implements Emitter
   }
 
   @Override
-  public void close() throws IOException
+  public void close()
   {
     flush();
     log.info("Closing [%s]", this.getClass().getName());
@@ -201,7 +205,7 @@ public class InfluxdbEmitter implements Emitter
     exec.shutdownNow();
   }
 
-  public void transformAndSendToInfluxdb(LinkedBlockingQueue<ServiceMetricEvent> eventsQueue)
+  private void transformAndSendToInfluxdb(LinkedBlockingQueue<ServiceMetricEvent> eventsQueue)
   {
     StringBuilder payload = new StringBuilder();
     int initialQueueSize = eventsQueue.size();
