@@ -152,7 +152,7 @@ public class HadoopIndexTask extends HadoopTask implements ChatHandler
   )
   {
     super(
-        id != null ? id : StringUtils.format("index_hadoop_%s_%s", getTheDataSource(spec), DateTimes.nowUtc()),
+        id != null ? id : StringUtils.format("index_hadoop_%s_%s", getTheDataSource(spec), DateTimes.now().toLocalDateTime()),
         getTheDataSource(spec),
         hadoopDependencyCoordinates == null
         ? (hadoopCoordinates == null ? null : ImmutableList.of(hadoopCoordinates))

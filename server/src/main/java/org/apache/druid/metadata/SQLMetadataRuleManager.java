@@ -105,7 +105,7 @@ public class SQLMetadataRuleManager implements MetadataRuleManager
                       )
                   )
               );
-              final String version = DateTimes.nowUtc().toString();
+              final String version = DateTimes.now().toString();
               handle.createStatement(
                   StringUtils.format(
                       "INSERT INTO %s (id, dataSource, version, payload) VALUES (:id, :dataSource, :version, :payload)",
@@ -378,7 +378,7 @@ public class SQLMetadataRuleManager implements MetadataRuleManager
               @Override
               public Void inTransaction(Handle handle, TransactionStatus transactionStatus) throws Exception
               {
-                final DateTime auditTime = DateTimes.nowUtc();
+                final DateTime auditTime = DateTimes.now();
                 auditManager.doAudit(
                     AuditEntry.builder()
                               .key(dataSource)

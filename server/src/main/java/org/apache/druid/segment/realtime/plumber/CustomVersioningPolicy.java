@@ -35,7 +35,7 @@ public class CustomVersioningPolicy implements VersioningPolicy
       @JsonProperty("version") String version
   )
   {
-    this.version = version == null ? DateTimes.nowUtc().toString() : version;
+    this.version = version == null ? DateTimes.now().toString() : version;
   }
 
   @Override

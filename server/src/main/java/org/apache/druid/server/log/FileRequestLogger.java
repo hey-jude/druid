@@ -20,6 +20,7 @@
 package org.apache.druid.server.log;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.netty.util.SuppressForbidden;
 import org.apache.druid.java.util.common.DateTimes;
 import org.apache.druid.java.util.common.concurrent.ScheduledExecutors;
 import org.apache.druid.java.util.common.guava.CloseQuietly;
@@ -66,15 +67,16 @@ public class FileRequestLogger implements RequestLogger
 
   @LifecycleStart
   @Override
+  @SuppressForbidden(reason = "ISOChronology#getInstance")
   public void start()
   {
     try {
       baseDir.mkdirs();
 
-      MutableDateTime mutableDateTime = DateTimes.nowUtc().toMutableDateTime(ISOChronology.getInstanceUTC());
+      MutableDateTime mutableDateTime = DateTimes.now().toMutableDateTime(ISOChronology.getInstance());
       mutableDateTime.setMillisOfDay(0);
       synchronized (lock) {
-        currentDay = mutableDateTime.toDateTime(ISOChronology.getInstanceUTC());
+        currentDay = mutableDateTime.toDateTime(ISOChronology.getInstance());
 
         fileWriter = getFileWriter();
       }

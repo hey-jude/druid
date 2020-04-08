@@ -125,7 +125,7 @@ public class AppenderatorDriverRealtimeIndexTask extends AbstractTask implements
         "index_realtime_%s_%d_%s_%s",
         spec.getDataSchema().getDataSource(),
         spec.getTuningConfig().getShardSpec().getPartitionNum(),
-        DateTimes.nowUtc(),
+        DateTimes.now().toLocalDateTime(),
         RealtimeIndexTask.makeRandomId()
     );
   }
