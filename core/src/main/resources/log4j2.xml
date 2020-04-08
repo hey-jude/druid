@@ -18,7 +18,7 @@
   ~ under the License.
   -->
 
-<Configuration status="WARN">
+<Configuration status="ERROR" shutdownHook="disable">
   <Appenders>
     <Console name="Console" target="SYSTEM_OUT">
       <PatternLayout pattern="%d{ISO8601} %p [%t] %c - %m%n"/>
@@ -28,5 +28,24 @@
     <Root level="info">
       <AppenderRef ref="Console"/>
     </Root>
+    <Logger name="com.sun.jersey.guice.spi.container.GuiceComponentProviderFactory" level="WARN"/>
+    <Logger name="org.apache.druid.initialization.Initialization" level="WARN"/>
+    <Logger name="org.apache.druid.indexer.HadoopDruidIndexerConfig" level="WARN"/>
+    <Logger name="org.apache.druid.indexing" level="DEBUG"/>
+    <Logger name="org.apache.druid.segment.StringDimensionMergerV9" level="WARN"/>
+    <Logger name="org.apache.druid.segment.IndexMergerV9" level="WARN"/>
+    <Logger name="org.apache.druid.segment.IndexMerger" level="WARN"/>
+    <Logger name="org.apache.druid.segment.CompressedPools" level="WARN"/>
+    <Logger name="org.apache.druid.java.util.common.CompressionUtils" level="WARN"/>
+    <Logger name="org.apache.druid.segment.QueryableIndexIndexableAdapter" level="WARN"/>
+    <Logger name="org.apache.druid.segment.realtime.appenderator.AppenderatorImpl" level="WARN"/>
+    <Logger name="org.apache.druid.java.util.common.io.smoosh.FileSmoosher" level="WARN"/>
+    <Logger name="org.apache.hadoop.mapred.Merger" level="WARN"/>
+    <Logger name="org.apache.hadoop.io.compress.CodecPool" level="WARN"/>
+    <Logger name="org.apache.hadoop.mapreduce.task.reduce.Fetcher" level="WARN"/>
+    <Logger name="org.apache.hadoop.mapreduce.task.reduce.ShuffleSchedulerImpl" level="WARN"/>
+    <Logger name="org.apache.hadoop.mapreduce.task.reduce.InMemoryMapOutput" level="WARN"/>
+    <Logger name="org.apache.hadoop.mapreduce.task.reduce.MergeManagerImpl" level="WARN"/>
+    <Logger name="org.apache.hadoop.mapred.TaskAttemptListenerImpl" level="WARN"/>
   </Loggers>
 </Configuration>
