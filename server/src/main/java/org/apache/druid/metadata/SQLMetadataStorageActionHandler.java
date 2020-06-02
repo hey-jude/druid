@@ -26,12 +26,14 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
+import io.netty.util.SuppressForbidden;
 import org.apache.druid.indexer.TaskInfo;
 import org.apache.druid.java.util.common.DateTimes;
 import org.apache.druid.java.util.common.Pair;
 import org.apache.druid.java.util.common.StringUtils;
 import org.apache.druid.java.util.emitter.EmittingLogger;
 import org.joda.time.DateTime;
+import org.joda.time.chrono.ISOChronology;
 import org.skife.jdbi.v2.FoldController;
 import org.skife.jdbi.v2.Folder3;
 import org.skife.jdbi.v2.Handle;
@@ -350,6 +352,7 @@ public abstract class SQLMetadataStorageActionHandler<EntryType, StatusType, Log
     }
 
     @Override
+    @SuppressForbidden(reason = "ISOChronology#getInstance")
     public TaskInfo<EntryType, StatusType> map(int index, ResultSet resultSet, StatementContext context)
         throws SQLException
     {
@@ -372,7 +375,7 @@ public abstract class SQLMetadataStorageActionHandler<EntryType, StatusType, Log
       }
       taskInfo = new TaskInfo<>(
           resultSet.getString("id"),
-          DateTimes.of(resultSet.getString("created_date")),
+          DateTimes.of(resultSet.getString("created_date"), ISOChronology.getInstance()),
           status,
           resultSet.getString("datasource"),
           task
