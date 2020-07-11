@@ -42,7 +42,7 @@ public class TimestampParser
   {
     if ("auto".equalsIgnoreCase(format)) {
       // Could be iso or millis
-      final DateTimes.UtcFormatter parser = DateTimes.wrapFormatter(createAutoParser());
+      final DateTimes.LocalFormatter parser = DateTimes.wrapLocalFormatter(createAutoParser());
       return (String input) -> {
         Preconditions.checkArgument(!Strings.isNullOrEmpty(input), "null timestamp");
 
@@ -87,7 +87,7 @@ public class TimestampParser
       };
     } else {
       try {
-        final DateTimes.UtcFormatter formatter = DateTimes.wrapFormatter(DateTimeFormat.forPattern(format));
+        final DateTimes.LocalFormatter formatter = DateTimes.wrapLocalFormatter(DateTimeFormat.forPattern(format));
         return input -> {
           Preconditions.checkArgument(!Strings.isNullOrEmpty(input), "null timestamp");
           return formatter.parse(ParserUtils.stripQuotes(input));
