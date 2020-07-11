@@ -72,6 +72,7 @@ public class InfluxdbEmitterTest
         30000,
         "adam",
         "password",
+        null,
         null
     );
     InfluxdbEmitter influxdbEmitter = new InfluxdbEmitter(config);
@@ -113,6 +114,7 @@ public class InfluxdbEmitterTest
         30000,
         "adam",
         "password",
+        null,
         null
     );
     InfluxdbEmitter influxdbEmitter = new InfluxdbEmitter(config);
@@ -155,7 +157,8 @@ public class InfluxdbEmitterTest
         30000,
         "adam",
         "password",
-        ImmutableSet.of("dataSource")
+        ImmutableSet.of("dataSource"),
+        null
     );
     InfluxdbEmitter influxdbEmitter = new InfluxdbEmitter(config);
     String expected = "druid_metric,service=druid/historical,hostname=localhost,dataSource=wikipedia druid_time=1234 1509357600000000000"
@@ -197,6 +200,7 @@ public class InfluxdbEmitterTest
         30000,
         "adam",
         "password",
+        null,
         null
     );
     InfluxdbEmitter influxdbEmitter = new InfluxdbEmitter(config);
