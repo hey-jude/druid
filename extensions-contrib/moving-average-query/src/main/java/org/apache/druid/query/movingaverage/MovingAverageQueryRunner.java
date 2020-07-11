@@ -134,7 +134,7 @@ public class MovingAverageQueryRunner implements QueryRunner<Row>
         // use localhost for remote address
         requestLogger.logNativeQuery(RequestLogLine.forNative(
             gbq,
-            DateTimes.nowUtc(),
+            DateTimes.now(),
             "127.0.0.1",
             new QueryStats(
                 ImmutableMap.of(
@@ -175,7 +175,7 @@ public class MovingAverageQueryRunner implements QueryRunner<Row>
         // use localhost for remote address
         requestLogger.logNativeQuery(RequestLogLine.forNative(
             tsq,
-            DateTimes.nowUtc(),
+            DateTimes.now(),
             "127.0.0.1",
             new QueryStats(
                 ImmutableMap.of(

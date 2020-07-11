@@ -79,7 +79,7 @@ public class NoopTask extends AbstractTask
   )
   {
     super(
-        id == null ? StringUtils.format("noop_%s_%s", DateTimes.nowUtc(), UUID.randomUUID().toString()) : id,
+        id == null ? StringUtils.format("noop_%s_%s", DateTimes.now().toLocalDateTime(), UUID.randomUUID().toString()) : id,
         groupId,
         null,
         dataSource == null ? "none" : dataSource,

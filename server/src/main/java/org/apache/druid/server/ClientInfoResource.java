@@ -314,7 +314,7 @@ public class ClientInfoResource
 
   protected DateTime getCurrentTime()
   {
-    return DateTimes.nowUtc();
+    return DateTimes.now();
   }
 
 

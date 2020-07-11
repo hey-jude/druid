@@ -100,7 +100,7 @@ public abstract class AbstractTask implements Task
       objects.add(interval.getStart());
       objects.add(interval.getEnd());
     }
-    objects.add(DateTimes.nowUtc().toString());
+    objects.add(DateTimes.now().toString());
 
     return joinId(objects);
   }
