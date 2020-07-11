@@ -50,6 +50,7 @@ public class InfluxdbEmitter implements Emitter
   private final AtomicBoolean started = new AtomicBoolean(false);
   private final ScheduledExecutorService exec = ScheduledExecutors.fixed(1, "InfluxdbEmitter-%s");
   private final ImmutableSet dimensionWhiteList;
+  private final ImmutableSet allowedMetrics;
   private final LinkedBlockingQueue<ServiceMetricEvent> eventsQueue;
   private static final Pattern DOT_OR_WHITESPACE = Pattern.compile("[\\s]+|[.]+");
 
@@ -59,6 +60,7 @@ public class InfluxdbEmitter implements Emitter
     this.influxdbClient = HttpClientBuilder.create().build();
     this.eventsQueue = new LinkedBlockingQueue<>(influxdbEmitterConfig.getMaxQueueSize());
     this.dimensionWhiteList = influxdbEmitterConfig.getDimensionWhitelist();
+    this.allowedMetrics = influxdbEmitterConfig.getAllowedMetrics();
     log.info("constructed influxdb emitter");
   }
 
@@ -84,7 +86,9 @@ public class InfluxdbEmitter implements Emitter
     if (event instanceof ServiceMetricEvent) {
       ServiceMetricEvent metricEvent = (ServiceMetricEvent) event;
       try {
-        eventsQueue.put(metricEvent);
+        if (allowedMetrics.contains(metricEvent.getMetric())) {
+          eventsQueue.put(metricEvent);
+        }
       }
       catch (InterruptedException exception) {
         log.error(exception, "Failed to add metricEvent to events queue.");
