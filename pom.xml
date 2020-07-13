@@ -835,7 +835,7 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.hadoop</groupId>
-                <artifactId>hadoop-hdfs-client</artifactId>
+                <artifactId>hadoop-hdfs</artifactId>
                 <version>${hadoop.compile.version}</version>
                 <scope>provided</scope>
             </dependency>
