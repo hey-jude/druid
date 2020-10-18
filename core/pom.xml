@@ -404,6 +404,10 @@
           ${project.build.directory}/hyperic-sigar-${sigar.base.version}/sigar-bin/lib
         </directory>
       </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes><include>**/log4j2.xml</include></includes>
+      </resource>
     </resources>
   </build>
 
