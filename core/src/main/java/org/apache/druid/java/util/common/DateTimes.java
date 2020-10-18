@@ -90,6 +90,22 @@ public final class DateTimes
       return innerFormatter.print(instant);
     }
   }
+  public static class LocalFormatter
+  {
+    private final DateTimeFormatter innerFormatter;
+
+    @SuppressForbidden(reason = "ISOChronology#getInstance")
+    private LocalFormatter(final DateTimeFormatter innerFormatter)
+    {
+      this.innerFormatter = innerFormatter.withChronology(ISOChronology.getInstance());
+    }
+
+    @SuppressForbidden(reason = "DateTimeFormatter#parseDateTime")
+    public DateTime parse(final String instant)
+    {
+      return innerFormatter.parseDateTime(instant);
+    }
+  }
 
   /**
    * Creates a {@link UtcFormatter} that wraps around a {@link DateTimeFormatter}.
@@ -99,6 +115,10 @@ public final class DateTimes
   public static UtcFormatter wrapFormatter(final DateTimeFormatter formatter)
   {
     return new UtcFormatter(formatter);
+  }
+  public static LocalFormatter wrapLocalFormatter(final DateTimeFormatter formatter)
+  {
+    return new LocalFormatter(formatter);
   }
 
   public static DateTime utc(long instant)
