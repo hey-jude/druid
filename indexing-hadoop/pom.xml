@@ -108,7 +108,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.hadoop</groupId>
-            <artifactId>hadoop-hdfs-client</artifactId>
+            <artifactId>hadoop-hdfs</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>

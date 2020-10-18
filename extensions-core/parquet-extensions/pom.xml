@@ -118,7 +118,7 @@
     <!-- needed if using native batch with hdfs input source -->
     <dependency>
       <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-hdfs-client</artifactId>
+      <artifactId>hadoop-hdfs</artifactId>
       <scope>runtime</scope>
     </dependency>
     <!--
