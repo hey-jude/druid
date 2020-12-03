@@ -73,7 +73,7 @@ public class InfluxdbEmitterConfig
       @JsonProperty("influxdbPassword") String influxdbPassword,
       @JsonProperty("dimensionWhitelist") Set<String> dimensionWhitelist,
       @JsonProperty("allowedMetrics") ImmutableSet<String> allowedMetrics
-     )
+  )
   {
     this.hostname = Preconditions.checkNotNull(hostname, "hostname can not be null");
     this.port = port == null ? DEFAULT_PORT : port;
