@@ -51,7 +51,7 @@ public class AuditEntry
     this.key = key;
     this.type = type;
     this.auditInfo = authorInfo;
-    this.auditTime = auditTime == null ? DateTimes.nowUtc() : auditTime;
+    this.auditTime = auditTime == null ? DateTimes.now() : auditTime;
     this.payload = payload;
   }
 
@@ -151,7 +151,7 @@ public class AuditEntry
       this.key = null;
       this.auditInfo = null;
       this.payload = null;
-      this.auditTime = DateTimes.nowUtc();
+      this.auditTime = DateTimes.now();
     }
 
     public Builder key(String key)

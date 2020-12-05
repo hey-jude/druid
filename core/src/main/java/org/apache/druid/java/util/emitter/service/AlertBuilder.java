@@ -76,7 +76,7 @@ public class AlertBuilder extends ServiceEventBuilder<AlertEvent>
   @Override
   public AlertEvent build(ImmutableMap<String, String> serviceDimensions)
   {
-    return new AlertEvent(DateTimes.nowUtc(), serviceDimensions, severity, description, dataMap);
+    return new AlertEvent(DateTimes.now(), serviceDimensions, severity, description, dataMap);
   }
 
   public void emit()

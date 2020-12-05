@@ -97,7 +97,7 @@ public class WorkerCuratorCoordinator
           curatorFramework,
           getTaskPathForWorker(),
           CreateMode.PERSISTENT,
-          jsonMapper.writeValueAsBytes(ImmutableMap.of("created", DateTimes.nowUtc().toString())),
+          jsonMapper.writeValueAsBytes(ImmutableMap.of("created", DateTimes.now().toString())),
           config.getMaxZnodeBytes()
       );
 
@@ -105,7 +105,7 @@ public class WorkerCuratorCoordinator
           curatorFramework,
           getStatusPathForWorker(),
           CreateMode.PERSISTENT,
-          jsonMapper.writeValueAsBytes(ImmutableMap.of("created", DateTimes.nowUtc().toString())),
+          jsonMapper.writeValueAsBytes(ImmutableMap.of("created", DateTimes.now().toString())),
           config.getMaxZnodeBytes()
       );
 

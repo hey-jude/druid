@@ -163,7 +163,7 @@ public class MaterializedViewSupervisorSpec implements SupervisorSpec
 
   public HadoopIndexTask createTask(Interval interval, String version, List<DataSegment> segments)
   {
-    String taskId = StringUtils.format("%s_%s_%s", TASK_PREFIX, dataSourceName, DateTimes.nowUtc());
+    String taskId = StringUtils.format("%s_%s_%s", TASK_PREFIX, dataSourceName, DateTimes.now().toLocalDateTime());
 
     // generate parser
     Map<String, Object> parseSpec = new HashMap<>();

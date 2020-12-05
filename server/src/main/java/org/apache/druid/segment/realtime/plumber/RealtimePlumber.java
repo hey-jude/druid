@@ -763,7 +763,7 @@ public class RealtimePlumber implements Plumber
 
     log.info(
         "Expect to run at [%s]",
-        DateTimes.nowUtc().plus(
+        DateTimes.now().plus(
             new Duration(
                 System.currentTimeMillis(),
                 segmentGranularity.increment(truncatedNow).getMillis() + windowMillis

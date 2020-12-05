@@ -76,7 +76,7 @@ public class AlertEvent implements Event
       Map<String, Object> dataMap
   )
   {
-    this(DateTimes.nowUtc(), service, host, severity, description, dataMap);
+    this(DateTimes.now(), service, host, severity, description, dataMap);
   }
 
   public AlertEvent(
@@ -86,7 +86,7 @@ public class AlertEvent implements Event
       Map<String, Object> dataMap
   )
   {
-    this(DateTimes.nowUtc(), service, host, Severity.DEFAULT, description, dataMap);
+    this(DateTimes.now(), service, host, Severity.DEFAULT, description, dataMap);
   }
 
   public AlertEvent(
@@ -95,7 +95,7 @@ public class AlertEvent implements Event
       String description
   )
   {
-    this(DateTimes.nowUtc(), service, host, Severity.DEFAULT, description, ImmutableMap.of());
+    this(DateTimes.now(), service, host, Severity.DEFAULT, description, ImmutableMap.of());
   }
 
   public DateTime getCreatedTime()

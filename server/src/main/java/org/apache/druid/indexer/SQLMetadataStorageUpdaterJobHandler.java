@@ -70,7 +70,7 @@ public class SQLMetadataStorageUpdaterJobHandler implements MetadataStorageUpdat
                   new ImmutableMap.Builder<String, Object>()
                       .put("id", segment.getId().toString())
                       .put("dataSource", segment.getDataSource())
-                      .put("created_date", DateTimes.nowUtc().toString())
+                      .put("created_date", DateTimes.now().toString())
                       .put("start", segment.getInterval().getStart().toString())
                       .put("end", segment.getInterval().getEnd().toString())
                       .put("partitioned", (segment.getShardSpec() instanceof NoneShardSpec) ? false : true)

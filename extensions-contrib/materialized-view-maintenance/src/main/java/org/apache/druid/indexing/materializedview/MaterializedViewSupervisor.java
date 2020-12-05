@@ -228,7 +228,7 @@ public class MaterializedViewSupervisor implements Supervisor
   {
     return new MaterializedViewSupervisorReport(
         dataSource,
-        DateTimes.nowUtc(),
+        DateTimes.now(),
         spec.isSuspended(),
         spec.getBaseDataSource(),
         spec.getDimensions(),

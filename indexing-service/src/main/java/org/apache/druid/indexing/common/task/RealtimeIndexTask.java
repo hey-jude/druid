@@ -102,7 +102,7 @@ public class RealtimeIndexTask extends AbstractTask
     return makeTaskId(
         fireDepartment.getDataSchema().getDataSource(),
         fireDepartment.getTuningConfig().getShardSpec().getPartitionNum(),
-        DateTimes.nowUtc(),
+        DateTimes.now(),
         makeRandomId()
     );
   }
@@ -113,7 +113,7 @@ public class RealtimeIndexTask extends AbstractTask
         "index_realtime_%s_%d_%s_%s",
         dataSource,
         partitionNumber,
-        timestamp,
+        timestamp.toLocalDateTime(),
         suffix
     );
   }
