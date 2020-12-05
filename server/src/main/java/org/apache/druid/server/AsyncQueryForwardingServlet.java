@@ -252,7 +252,7 @@ public class AsyncQueryForwardingServlet extends AsyncProxyServlet implements Qu
         requestLogger.logNativeQuery(
             RequestLogLine.forNative(
                 null,
-                DateTimes.nowUtc(),
+                DateTimes.now(),
                 request.getRemoteAddr(),
                 new QueryStats(ImmutableMap.of("success", false, "exception", errorMessage))
             )
@@ -486,7 +486,7 @@ public class AsyncQueryForwardingServlet extends AsyncProxyServlet implements Qu
         requestLogger.logNativeQuery(
             RequestLogLine.forNative(
                 query,
-                DateTimes.nowUtc(),
+                DateTimes.now(),
                 req.getRemoteAddr(),
                 new QueryStats(
                     ImmutableMap.of(
@@ -517,7 +517,7 @@ public class AsyncQueryForwardingServlet extends AsyncProxyServlet implements Qu
         requestLogger.logNativeQuery(
             RequestLogLine.forNative(
                 query,
-                DateTimes.nowUtc(),
+                DateTimes.now(),
                 req.getRemoteAddr(),
                 new QueryStats(
                     ImmutableMap.of(

@@ -128,12 +128,17 @@ public final class DateTimes
 
   public static DateTime of(String instant)
   {
+    return of(instant, ISOChronology.getInstanceUTC());
+  }
+
+  public static DateTime of(String instant, ISOChronology chronology)
+  {
     try {
-      return new DateTime(instant, ISOChronology.getInstanceUTC());
+      return new DateTime(instant, chronology);
     }
     catch (IllegalArgumentException ex) {
       try {
-        return new DateTime(Long.valueOf(instant), ISOChronology.getInstanceUTC());
+        return new DateTime(Long.valueOf(instant), chronology);
       }
       catch (IllegalArgumentException ex2) {
         throw ex;
@@ -155,6 +160,12 @@ public final class DateTimes
   public static DateTime nowUtc()
   {
     return DateTime.now(ISOChronology.getInstanceUTC());
+  }
+
+  @SuppressForbidden(reason = "ISOChronology#getInstance")
+  public static DateTime now()
+  {
+    return DateTime.now(ISOChronology.getInstance());
   }
 
   public static DateTime max(DateTime dt1, DateTime dt2)

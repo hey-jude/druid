@@ -83,7 +83,7 @@ public class IdUtils
 
   public static String newTaskId(@Nullable String idPrefix, String typeName, String dataSource, @Nullable Interval interval)
   {
-    return newTaskId(idPrefix, getRandomId(), DateTimes.nowUtc(), typeName, dataSource, interval);
+    return newTaskId(idPrefix, getRandomId(), DateTimes.now(), typeName, dataSource, interval);
   }
 
   /**
@@ -111,7 +111,7 @@ public class IdUtils
       objects.add(interval.getStart().toString());
       objects.add(interval.getEnd().toString());
     }
-    objects.add(now.toString());
+    objects.add(now.toLocalDateTime().toString());
 
     return String.join("_", objects);
   }

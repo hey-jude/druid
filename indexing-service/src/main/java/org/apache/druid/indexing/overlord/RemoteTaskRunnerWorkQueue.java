@@ -30,6 +30,6 @@ public class RemoteTaskRunnerWorkQueue extends ConcurrentSkipListMap<String, Rem
   @Override
   public RemoteTaskRunnerWorkItem put(String s, RemoteTaskRunnerWorkItem taskRunnerWorkItem)
   {
-    return super.put(s, taskRunnerWorkItem.withQueueInsertionTime(DateTimes.nowUtc()));
+    return super.put(s, taskRunnerWorkItem.withQueueInsertionTime(DateTimes.now()));
   }
 }

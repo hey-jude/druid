@@ -60,7 +60,7 @@ public class InlineJoinableFactory implements JoinableFactory
                   inlineDataSource.rowAdapter(),
                   inlineDataSource.getRowSignature(),
                   rightKeyColumns,
-                  DateTimes.nowUtc().toString()
+                  DateTimes.now().toString()
               )
           )
       );

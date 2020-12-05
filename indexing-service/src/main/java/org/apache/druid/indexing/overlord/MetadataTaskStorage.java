@@ -134,7 +134,7 @@ public class MetadataTaskStorage implements TaskStorage
     try {
       handler.insert(
           task.getId(),
-          DateTimes.nowUtc(),
+          DateTimes.now(),
           task.getDataSource(),
           task,
           status.isRunnable(),

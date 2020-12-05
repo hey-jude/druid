@@ -97,7 +97,7 @@ public class SQLMetadataSupervisorManager implements MetadataSupervisorManager
                 )
             )
                   .bind("spec_id", id)
-                  .bind("created_date", DateTimes.nowUtc().toString())
+                  .bind("created_date", DateTimes.now().toString())
                   .bind("payload", jsonMapper.writeValueAsBytes(spec))
                   .execute();
 

@@ -67,7 +67,7 @@ public class SQLMetadataSegmentPublisher implements MetadataSegmentPublisher
     publishSegment(
         segment.getId().toString(),
         segment.getDataSource(),
-        DateTimes.nowUtc().toString(),
+        DateTimes.now().toString(),
         segment.getInterval().getStart().toString(),
         segment.getInterval().getEnd().toString(),
         (segment.getShardSpec() instanceof NoneShardSpec) ? false : true,
